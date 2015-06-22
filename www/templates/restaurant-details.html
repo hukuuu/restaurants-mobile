@@ -1,0 +1,32 @@
+<ion-view view-title="{{res.name}}">
+  <ion-content>
+    <div style="text-align: center; font-style: italic; font-size: 1.3em; padding: 1em; font-variant: normal;">
+    <p>
+      Open Hours: {{res.openHours}}
+    </p>
+    <p style="margin-bottom:0">Menu:</p>
+    </div>
+    <ion-list>
+      <div ng-repeat="group in groups">
+        <ion-item  ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
+          <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{group.name}}
+        </ion-item>
+        <ion-item class="item-accordion item-stable" ng-repeat="item in group.items" ng-show="isGroupShown(group)" ng-init="count=0">
+          {{item.name}}
+          <span style="float:right">
+            <span style="margin-right:10px">{{item.price | currency}}</span>
+            <button ng-click="count = (count - 1)<0? 0 : count - 1">-</button>
+            <span>{{count}}</span>
+            <button type="button" ng-click="count = count + 1">+</button>
+            <button type="button" ng-click="addItemToCart(item,count);count = 0" ng-disabled="count === 0">Add</button>
+          </span>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+  <ion-footer-bar align-title="left">
+    <button ng-show="getTotalOrderCount()" ng-click="viewOrder()" class="button button-block button-positive" style="margin:0">
+      View Order <small>( {{getTotalOrderCount()}} items )</small>
+    </button>
+  </ion-footer-bar>
+</ion-view>

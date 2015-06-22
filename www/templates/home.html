@@ -1,0 +1,21 @@
+<ion-view view-title="Home">
+  <ion-content class="padding">
+    <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+      <ui-gmap-markers models="markers" icon="'icon'" options="'options'" coords="'self'" icon="'icon'" click="foo">
+        <!-- templateUrl="'template'"
+        templateParameter="'res'"> -->
+        <ui-gmap-windows options="'options'" show="show" isIconVisibleOnClick="labelVisibleOnInfo">
+          <div ng-non-bindable>
+            <p>
+              {{res.name}}
+            </p>
+            <p>
+              {{res.address}}
+            </p>
+            <button type="button" name="button" ng-click="foo()">View</button>
+          </div>
+        </ui-gmap-windows>
+      </ui-gmap-markers>
+    </ui-gmap-google-map>
+  </ion-content>
+</ion-view>
