@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-  .controller('RestaurantDetailsCtrl', function($scope, $stateParams, $ionicLoading, $timeout, $ionicModal, CartService, RestaurantsService) {
+  .controller('RestaurantDetailsCtrl', function($scope, $stateParams, $ionicLoading, $timeout, $ionicModal, CartService, RestaurantsService, HistoryService) {
 
     $ionicModal.fromTemplateUrl('templates/order.html', {
       scope: $scope,
@@ -78,8 +78,14 @@ angular.module('starter.controllers')
     }
 
     $scope.finishOrder = function () {
-      $scope.modal.hide();
       message('order is finished')
+      CartService.getAllItems();
+      HistoryService.addItem({
+        time: new Date().getTime(),
+        restaurant: res,
+        items: CartService.getAllItems()
+      })
+      CartService.clearAllItems()
     }
 
     $scope.getTotalOrderPrice = function () {

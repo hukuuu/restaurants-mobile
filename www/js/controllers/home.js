@@ -1,6 +1,5 @@
 angular.module('starter.controllers')
-  .controller('HomeCtrl', function($scope, $state, RestaurantsService, uiGmapGoogleMapApi) {
-
+  .controller('HomeCtrl', function($scope, $state, $ionicPopup, RestaurantsService, uiGmapGoogleMapApi) {
 
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
@@ -15,9 +14,21 @@ angular.module('starter.controllers')
         };
 
         $scope.foo = function(_, _, marker) {
+          $scope.selectedRestaurant = marker.res
           console.log(marker);
-          $state.go('tab.restaurant', {
-            id: marker.res.id
+          $ionicPopup.show({
+            title: marker.res.name,
+            templateUrl: 'templates/restaurant-info.html',
+            scope: $scope,
+            buttons: [{
+              text: 'View',
+              type: 'button-positive',
+              onTap: function() {
+                $state.go('tab.restaurant', {
+                  id: marker.res.id
+                })
+              }
+            }]
           })
         }
 
@@ -27,16 +38,15 @@ angular.module('starter.controllers')
               id: i,
               latitude: res.latitude,
               longitude: res.longitude,
-              icon: 'img/' + ['carrot','burger','meet','pizza'][Math.round(
-                Math.random() * 3
-              )] + '.png',
+              // icon: 'img/' + ['carrot', 'burger', 'meet', 'pizza'][Math.round(
+              //   Math.random() * 3
+              // )] + '.png',
               labelVisibleOnInfo: false,
               template: 'templates/infoWindow.html',
               res: res,
               options: {
                 click: $scope.foo,
                 labelContent: res.name //,
-                  // labelAnchor: new google.maps.Point(25, 0)
               }
             }
           })
