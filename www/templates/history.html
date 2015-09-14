@@ -6,8 +6,8 @@
         <span class="badge badge-stable">
           {{order.status}}
         </span>
-        <h2>{{order.restaurant.name}} ( {{getPrice(order) | currency}} )</h2>
-        <p>{{order.time | date}}</p>
+        <h2>{{order.seats}} seats at {{order.restaurant.name}} ( {{getPrice(order) | currency}} )</h2>
+        <p>{{order.time | date}}, {{order.hours}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
